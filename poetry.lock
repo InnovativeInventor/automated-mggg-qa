@@ -145,7 +145,7 @@ urllib3 = ">=1.0.0,<2.0.0"
 wheel = "<1.0.0"
 
 [package.source]
-reference = "a07e5e32b62016ea479955d8f1f7c7875d246bde"
+reference = "8ccce87be99fc84e4d0dd24948e5b7a198dc634f"
 type = "git"
 url = "https://github.com/InnovativeInventor/gdutils.git"
 [[package]]

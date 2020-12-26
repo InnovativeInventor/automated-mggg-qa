@@ -10,8 +10,9 @@
         "yearEffectiveEnd": 2018
     },
     "descriptors": {
-        "stateFIPS": "STATEFP10",
-        "countyFIPS": "COUNTYFP10",
+        "stateFIPS": "",
+        "countyFIPS": "",
+	"countyLegalName": "",
         "totalPopulation": "TOTPOP"
     },
     "elections": {

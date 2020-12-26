@@ -9,7 +9,7 @@ Work in progress.
 ```python
 pip install poetry
 poetry install
-poetry run audit.py
+poetry run python audit.py
 ```
 
 ## Contributions

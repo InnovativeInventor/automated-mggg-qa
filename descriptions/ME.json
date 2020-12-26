@@ -12,6 +12,7 @@
     "descriptors": {
         "stateFIPS": "STATEFP",
         "countyFIPS": "COUNTYFP",
+	"countyLegalName": "County",
         "totalPopulation": "TOTPOP"
     },
     "elections": {
