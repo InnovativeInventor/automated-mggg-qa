@@ -5,7 +5,7 @@
         "git": "https://github.com/mggg-states/ME-shapefiles.git",
         "repoName": "ME-shapefiles",
         "archive": "Maine.zip",
-        "file": "Maine.shp",
+        "fileName": "Maine.shp",
         "yearEffectiveStart": 2012,
         "yearEffectiveEnd": 2018
     },

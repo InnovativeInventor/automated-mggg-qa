@@ -15,13 +15,7 @@ import os
 from dotenv import load_dotenv
 import pandas as pd
 from utils.logger import Logger
-
-
-class StateRepo(BaseModel):
-    state: str
-    repo_name: str
-    repo_account: str
-    repo_url: str
+from description import StateRepo
 
 
 class CensusWrapper:
@@ -203,7 +197,7 @@ class Auditor:
                         else:
                             county_aggregate[each_county_fips] = county
 
-                    county_populations = census.get_population(
+                    census_county_populations = census.get_population(
                         counties=[str(x).zfill(3) for x in county_aggregate.keys()]
                     )
                     for each_county_fips, each_county in county_aggregate.items():
@@ -216,11 +210,10 @@ class Auditor:
 
                         county_fips = str(each_county_fips).zfill(3)
                         try:
-                            census_county_population = county_populations[county_fips]
                             assert (
                                 abs(
                                     each_county[total_population_col]
-                                    - census_county_population
+                                    - census_county_populations[county_fips]
                                 )
                                 <= 1
                             )
@@ -238,8 +231,10 @@ class Auditor:
 
 if __name__ == "__main__":
     load_dotenv()
+
     if census_api_key := os.getenv("CENSUS_API_KEY"):
         audit = Auditor(census_api_key=census_api_key)
         audit.run_audit()
+
     else:
         Logger.log_warning("Cannot find Census API key!")

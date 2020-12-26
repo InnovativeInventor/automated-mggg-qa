@@ -5,7 +5,7 @@
         "git": "https://github.com/mggg-states/MA-shapefiles.git",
         "repoName": "MA-shapefiles",
         "archive": "MA_precincts_12_16.zip",
-        "file": "MA_precincts12_16.shp",
+        "fileName": "MA_precincts12_16.shp",
         "yearEffectiveStart": 2012,
         "yearEffectiveEnd": 2018
     },
