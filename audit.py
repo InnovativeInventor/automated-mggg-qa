@@ -1,5 +1,5 @@
 import tempfile
-from typing import List, Dict
+from typing import List, Dict, Union
 import glob
 import gdutils
 import gdutils.extract
@@ -28,14 +28,17 @@ class CensusWrapper:
     def __init__(self, year: int, state: int):
         self.year = year
         self.state = state
-        self.url = f"https://api.census.gov/data/{year}/dec/sf1?get={{fields}}&for=county:{{county}}&in=state:{state}"
+        self.url = f"https://api.census.gov/data/{year}/dec/sf1?get={{fields}}&for=county:{{counties}}&in=state:{state}"
 
-    def get_population(self, county="*"):
-        result = self.fetch("P009001", county=county)
-        return result["P009001"].sum()
+    def get_population(self, counties=["*"]) -> Union[Dict[str, int], int]:
+        result = self.fetch("P009001", counties=counties)
+        if counties == ["*"]:
+            return result["P009001"].sum()
 
-    def fetch(self, *fields, county="*"):
-        resource: str = self.url.format(county=county, fields=",".join(fields))
+        return dict(result["P009001"])
+
+    def fetch(self, *fields, counties=["*"]):
+        resource: str = self.url.format(counties=",".join(counties), fields=",".join(fields))
         # print(resource)
         response = json.loads(
                     requests.get(resource).content
@@ -43,10 +46,12 @@ class CensusWrapper:
 
         header = response[0]
         data = [[int(y) if not y.startswith("0") else str(y) for y in x] for x in response[1:]]
+        print(response)
 
         return pd.DataFrame.from_records(
             data,
             columns=header,
+            index="county"
         )
 
 class Auditor:
@@ -66,7 +71,7 @@ class Auditor:
 
         # Generate and filter list of openelections repos
         state_expr = re.compile(r"^openelections-data-\S\S$")
-        self.openelections_repos: Dict[StateRepo] = {
+        self.openelections_repos: Dict[str, StateRepo] = {
             repo_name: StateRepo(
                 state=repo_name.split("-")[-1],
                 repo_name=repo_name,
@@ -78,7 +83,7 @@ class Auditor:
             )
             if state_expr.match(repo_name)
         }
-        self.mggg_state_repos: Dict[StateRepo] = {
+        self.mggg_state_repos: Dict[str, StateRepo] = {
             repo_name: StateRepo(
                 state=repo_name.split("-")[0],
                 repo_name=repo_name,
@@ -195,6 +200,7 @@ class Auditor:
                         else:
                             county_aggregate[each_county_fips] = county
 
+                    county_populations = census.get_population(counties=[str(x).zfill(3) for x in county_aggregate.keys()])
                     for each_county_fips, each_county in county_aggregate.items():
                         try:
                             assert each_county[total_population_col] != 0
@@ -203,10 +209,10 @@ class Auditor:
 
                         county_fips = str(each_county_fips).zfill(3)
                         try:
-                            census_county_population = census.get_population(county=county_fips)
-                            assert each_county[total_population_col] == census_county_population
+                            census_county_population = county_populations[county_fips]
+                            assert abs(each_county[total_population_col] - census_county_population) <= 1
                         except AssertionError as e:
-                            Logger.log_error(f"The mggg-states total population in {each_county[county_legal_name]} county (FIPS {each_county_fips}) does not match the US Census ({each_county[total_population_col]}!={census_county_population})!")
+                            Logger.log_error(f"The mggg-states total population in {each_county[county_legal_name]} county (FIPS {each_county_fips}) are not close to the US Census ({each_county[total_population_col]}!={census_county_population})!")
 
             except KeyboardInterrupt:
                 Logger.log_info(f'Captured KeyboardInterrupt! Skipping {metadata["archive"]} in {each_description["metadata"]["stateLegalName"]} from {each_description["metadata"]["repoName"]}!')
@@ -215,5 +221,8 @@ class Auditor:
 
 if __name__ == "__main__":
     load_dotenv()
-    audit = Auditor(census_api_key=os.getenv("CENSUS_API_KEY"))
-    audit.run_audit()
+    if census_api_key := os.getenv("CENSUS_API_KEY"):
+        audit = Auditor(census_api_key=census_api_key)
+        audit.run_audit()
+    else:
+        Logger.log_warning("Cannot find Census API key!")

@@ -1,7 +1,7 @@
 import inspect
 import logging.config
 import os
-from utils.color import Color
+from utils.color import Color, Bg
 
 """
 Logger utility for debugging. 
@@ -15,13 +15,12 @@ DEFAULT_LOGGING = {
     "formatters": {
         "standard": {
             "format": Color.RED
-            + "%(asctime)s,%(msecs)d"
+            + "%(asctime)-23s"
             + Color.END
             + Color.PURPLE
-            + " %(levelname)-8s"
+            + " %(levelname)-7s"
             + Color.END
             + " %(message)s",
-            "datefmt": "%Y-%m-%d:%H:%M:%S",
         },
     },
     "handlers": {
@@ -60,7 +59,7 @@ class Logger:
         )
 
     def _log_function(
-        self, func, msg: str, header=None, frame=None, traceback_length=5
+            self, func, msg: str, header=None, frame=None, traceback_length=5, caller_color = Color.CYAN
     ) -> str:
         """
         Internal colored logging function.
@@ -92,16 +91,17 @@ class Logger:
         if header:
             msg = Color.YELLOW + header + Color.END + " " + msg
 
-        filename_display = " [" + file_name + ":" + line_no + "] "
+        filename_display = "[" + file_name + ":" + line_no + "]"
         if len(filename_display) > self.MAX_FILENAME_LENGTH:
             self.MAX_FILENAME_LENGTH = len(filename_display)
 
-        msg = (
-            Color.CYAN
-            + filename_display.ljust(self.MAX_FILENAME_LENGTH)
-            + Color.END
-            + msg
-        )
+        # msg = (
+        msg = f'{caller_color}{filename_display.ljust(self.MAX_FILENAME_LENGTH)}{Color.END} {msg}'
+            # caller_color
+            # + filename_display.ljust(self.MAX_FILENAME_LENGTH)
+            # + Color.END
+            # + msg
+        # )
 
         func(msg)
         return msg
@@ -135,7 +135,7 @@ class Logger:
         else:
             frame = inspect.currentframe().f_back
 
-        return cls()._log_function(log.error, str(msg), header, frame, traceback_length)
+        return cls()._log_function(log.error, str(msg), header, frame, traceback_length, caller_color=Bg.RED)
 
     @classmethod
     def log_warning(
