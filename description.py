@@ -48,7 +48,7 @@ class ElectionPartiesDescriptor(BaseModel):
 
 class Descriptor(BaseModel):
     stateFIPS: Optional[str]
-    contryFIPS: Optional[str]
+    countyFIPS: Optional[str]
     countyLegalName: Optional[str]
 
     totalPopulation: Optional[str]

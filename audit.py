@@ -15,7 +15,7 @@ import os
 from dotenv import load_dotenv
 import pandas as pd
 from utils.logger import Logger
-from description import StateRepo
+from description import StateRepo, StateDatafile
 
 
 class CensusWrapper:
@@ -88,10 +88,10 @@ class Auditor:
         }
 
         self.audit_repos = set()
-        self.descriptors: List[dict] = [
+        self.descriptor_files: List[dict] = [
             self.load_descriptor(x) for x in glob.glob("descriptions/*.json")
         ]
-        for each_item in self.descriptors:
+        for each_item in self.descriptor_files:
             self.audit_repos.add(each_item["metadata"]["repoName"])
 
         dm.clone_gh_repos(
@@ -123,31 +123,27 @@ class Auditor:
         """
         Runs audits on all states with descriptors
         """
-        for each_description in self.descriptors:
-            # Extract useful metadata from dict
-            metadata = each_description["metadata"]
-            repo_name = metadata["repoName"]
-            archive_name = metadata["archive"]
-            file_name = metadata["file"]
-            year = metadata["yearEffectiveEnd"]
-            state_fips_code = int(metadata["stateFIPSCode"])
+        for each_description in self.descriptor_files:
+            description = StateDatafile(**each_description)
+
+            metadata = description.metadata
+            descriptors = description.descriptors
+
             Logger.log_info(
-                f'Auditing {metadata["archive"]} in {each_description["metadata"]["stateLegalName"]} from {repo_name}.'
+                f'Auditing {metadata.archive} in {metadata.stateLegalName} from {metadata.repoName}.'
             )
 
             try:
                 # Construct paths
                 archive_path = (
-                    self.mggg_states_dir + "/" + repo_name + "/" + archive_name
+                    self.mggg_states_dir + "/" + metadata.repoName + "/" + metadata.archive
                 )
-                file_path = self.expand_zipfile(archive_path) + file_name
+                file_path = self.expand_zipfile(archive_path) + metadata.fileName
 
                 # Find column names
-                total_population_col = each_description["descriptors"][
-                    "totalPopulation"
-                ]
-                county_fips_col = each_description["descriptors"]["countyFIPS"]
-                county_legal_name = each_description["descriptors"]["countyLegalName"]
+                total_population_col = descriptors.totalPopulation
+                county_fips_col = descriptors.countyFIPS
+                county_legal_name = descriptors.countyLegalName
 
                 # Import and read shapefiles
                 if county_fips_col:
@@ -160,8 +156,8 @@ class Auditor:
                 shapefile_gdf = shapefile.extract()
 
                 # Setup census wrapper
-                decentennial = math.floor(year / 10) * 10
-                census = CensusWrapper(decentennial, state_fips_code)
+                decentennial = math.floor(metadata.yearEffectiveEnd / 10) * 10
+                census = CensusWrapper(decentennial, metadata.stateFIPSCode)
 
                 # Total population check
                 census_total_population = int(census.get_population())
@@ -170,7 +166,7 @@ class Auditor:
                 )
 
                 Logger.log_info(
-                    f"Comparing the {decentennial} Census total population count ({census_total_population}) to the mggg-states count ({mggg_total_population}) in {repo_name} for {year} "
+                    f"Comparing the {decentennial} Census total population count ({census_total_population}) to the mggg-states count ({mggg_total_population}) in {metadata.repoName} for {metadata.yearEffectiveEnd} "
                 )
                 try:
                     assert abs(mggg_total_population - census_total_population) <= 1
@@ -182,7 +178,7 @@ class Auditor:
                 # County level checks
                 if county_fips_col:
                     Logger.log_info(
-                        f"Checking the mggg-states county-level population count ({mggg_total_population}) in {repo_name} for {year} "
+                        f"Checking the mggg-states county-level population count ({mggg_total_population}) in {metadata.repoName} for {metadata.yearEffectiveEnd} "
                     )
 
                     # Aggregate by county
@@ -219,7 +215,7 @@ class Auditor:
                             )
                         except AssertionError as e:
                             Logger.log_error(
-                                f"The mggg-states total population in {each_county[county_legal_name]} county (FIPS {each_county_fips}) are not close to the US Census ({each_county[total_population_col]}!={census_county_population})!"
+                                f"The mggg-states total population in {each_county[county_legal_name]} county (FIPS {each_county_fips}) are not close to the US Census ({each_county[total_population_col]}!={census_county_populations[county_fips]})!"
                             )
 
             except KeyboardInterrupt:
