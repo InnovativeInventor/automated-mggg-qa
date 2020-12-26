@@ -2,6 +2,7 @@ class Color:
     """
     Text color class with ANSI escape codes
     """
+
     PURPLE = "\033[95m"
     CYAN = "\033[96m"
     DARKCYAN = "\033[36m"
@@ -13,10 +14,12 @@ class Color:
     UNDERLINE = "\033[4m"
     END = "\033[0m"
 
+
 class Bg:
     """
     Background color class with ANSI escape codes
     """
+
     PURPLE = "\033[105m"
     CYAN = "\033[106m"
     DARKCYAN = "\033[46m"

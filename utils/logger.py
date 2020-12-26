@@ -59,7 +59,13 @@ class Logger:
         )
 
     def _log_function(
-            self, func, msg: str, header=None, frame=None, traceback_length=5, caller_color = Color.CYAN
+        self,
+        func,
+        msg: str,
+        header=None,
+        frame=None,
+        traceback_length=5,
+        caller_color=Color.CYAN,
     ) -> str:
         """
         Internal colored logging function.
@@ -96,11 +102,11 @@ class Logger:
             self.MAX_FILENAME_LENGTH = len(filename_display)
 
         # msg = (
-        msg = f'{caller_color}{filename_display.ljust(self.MAX_FILENAME_LENGTH)}{Color.END} {msg}'
-            # caller_color
-            # + filename_display.ljust(self.MAX_FILENAME_LENGTH)
-            # + Color.END
-            # + msg
+        msg = f"{caller_color}{filename_display.ljust(self.MAX_FILENAME_LENGTH)}{Color.END} {msg}"
+        # caller_color
+        # + filename_display.ljust(self.MAX_FILENAME_LENGTH)
+        # + Color.END
+        # + msg
         # )
 
         func(msg)
@@ -135,7 +141,9 @@ class Logger:
         else:
             frame = inspect.currentframe().f_back
 
-        return cls()._log_function(log.error, str(msg), header, frame, traceback_length, caller_color=Bg.RED)
+        return cls()._log_function(
+            log.error, str(msg), header, frame, traceback_length, caller_color=Bg.RED
+        )
 
     @classmethod
     def log_warning(

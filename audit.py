@@ -38,21 +38,21 @@ class CensusWrapper:
         return dict(result["P009001"])
 
     def fetch(self, *fields, counties=["*"]):
-        resource: str = self.url.format(counties=",".join(counties), fields=",".join(fields))
+        resource: str = self.url.format(
+            counties=",".join(counties), fields=",".join(fields)
+        )
         # print(resource)
-        response = json.loads(
-                    requests.get(resource).content
-                )
+        response = json.loads(requests.get(resource).content)
 
         header = response[0]
-        data = [[int(y) if not y.startswith("0") else str(y) for y in x] for x in response[1:]]
+        data = [
+            [int(y) if not y.startswith("0") else str(y) for y in x]
+            for x in response[1:]
+        ]
         print(response)
 
-        return pd.DataFrame.from_records(
-            data,
-            columns=header,
-            index="county"
-        )
+        return pd.DataFrame.from_records(data, columns=header, index="county")
+
 
 class Auditor:
     """
@@ -107,7 +107,7 @@ class Auditor:
             account_type="orgs",
             repos=list(self.audit_repos),
             outpath=self.mggg_states_dir,
-            silent=True
+            silent=True,
         )
         # dm.clone_gh_repos(account="openelections", account_type="orgs", repos=map(lambda x: x.repo_name, self.openelections_repos), outpath=self.openelections_dir)
 
@@ -145,17 +145,23 @@ class Auditor:
 
             try:
                 # Construct paths
-                archive_path = self.mggg_states_dir + "/" + repo_name + "/" + archive_name
+                archive_path = (
+                    self.mggg_states_dir + "/" + repo_name + "/" + archive_name
+                )
                 file_path = self.expand_zipfile(archive_path) + file_name
 
                 # Find column names
-                total_population_col = each_description["descriptors"]["totalPopulation"]
+                total_population_col = each_description["descriptors"][
+                    "totalPopulation"
+                ]
                 county_fips_col = each_description["descriptors"]["countyFIPS"]
                 county_legal_name = each_description["descriptors"]["countyLegalName"]
 
                 # Import and read shapefiles
                 if county_fips_col:
-                    shapefile = gdutils.extract.read_file(file_path, column = county_fips_col)
+                    shapefile = gdutils.extract.read_file(
+                        file_path, column=county_fips_col
+                    )
                 else:
                     shapefile = gdutils.extract.read_file(file_path)
 
@@ -168,22 +174,18 @@ class Auditor:
                 # Total population check
                 census_total_population = int(census.get_population())
                 mggg_total_population = int(
-                    sum(
-                        shapefile.list_values(
-                            total_population_col
-                        )
-                    )
+                    sum(shapefile.list_values(total_population_col))
                 )
 
                 Logger.log_info(
                     f"Comparing the {decentennial} Census total population count ({census_total_population}) to the mggg-states count ({mggg_total_population}) in {repo_name} for {year} "
                 )
                 try:
-                    assert (
-                        abs(mggg_total_population - census_total_population) <= 1
-                    )
+                    assert abs(mggg_total_population - census_total_population) <= 1
                 except AssertionError as e:
-                    Logger.log_error(f"The total population counts are off by more than 1 (off by {abs(census_total_population-mggg_total_population)})!")
+                    Logger.log_error(
+                        f"The total population counts are off by more than 1 (off by {abs(census_total_population-mggg_total_population)})!"
+                    )
 
                 # County level checks
                 if county_fips_col:
@@ -196,26 +198,43 @@ class Auditor:
                     for each_county_fips, each_county in shapefile_gdf.iterrows():
                         county = dict(each_county)
                         if each_county_fips in county_aggregate:
-                            county_aggregate[each_county_fips] = {k:(v+county[k] if isinstance(v, float) else v) for k, v in county_aggregate[each_county_fips].items()}
+                            county_aggregate[each_county_fips] = {
+                                k: (v + county[k] if isinstance(v, float) else v)
+                                for k, v in county_aggregate[each_county_fips].items()
+                            }
                         else:
                             county_aggregate[each_county_fips] = county
 
-                    county_populations = census.get_population(counties=[str(x).zfill(3) for x in county_aggregate.keys()])
+                    county_populations = census.get_population(
+                        counties=[str(x).zfill(3) for x in county_aggregate.keys()]
+                    )
                     for each_county_fips, each_county in county_aggregate.items():
                         try:
                             assert each_county[total_population_col] != 0
                         except AssertionError as e:
-                            Logger.log_error(f"The total population in {each_county[county_legal_name]} county (FIPS {each_county_fips}) is zero!")
+                            Logger.log_error(
+                                f"The total population in {each_county[county_legal_name]} county (FIPS {each_county_fips}) is zero!"
+                            )
 
                         county_fips = str(each_county_fips).zfill(3)
                         try:
                             census_county_population = county_populations[county_fips]
-                            assert abs(each_county[total_population_col] - census_county_population) <= 1
+                            assert (
+                                abs(
+                                    each_county[total_population_col]
+                                    - census_county_population
+                                )
+                                <= 1
+                            )
                         except AssertionError as e:
-                            Logger.log_error(f"The mggg-states total population in {each_county[county_legal_name]} county (FIPS {each_county_fips}) are not close to the US Census ({each_county[total_population_col]}!={census_county_population})!")
+                            Logger.log_error(
+                                f"The mggg-states total population in {each_county[county_legal_name]} county (FIPS {each_county_fips}) are not close to the US Census ({each_county[total_population_col]}!={census_county_population})!"
+                            )
 
             except KeyboardInterrupt:
-                Logger.log_info(f'Captured KeyboardInterrupt! Skipping {metadata["archive"]} in {each_description["metadata"]["stateLegalName"]} from {each_description["metadata"]["repoName"]}!')
+                Logger.log_info(
+                    f'Captured KeyboardInterrupt! Skipping {metadata["archive"]} in {each_description["metadata"]["stateLegalName"]} from {each_description["metadata"]["repoName"]}!'
+                )
                 pass
 
 
