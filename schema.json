@@ -1,0 +1,866 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "metadata": {
+                "stateLegalName": "Commonwealth of Massachusetts",
+                "stateFIPSCode": 25,
+                "git": "https://github.com/mggg-states/MA-shapefiles.git",
+                "repoName": "MA-shapefiles",
+                "archive": "MA_precincts_12_16.zip",
+                "file": "MA_precincts12_16.shp",
+                "yearEffectiveStart": 2012,
+                "yearEffectiveEnd": 2018
+            },
+            "descriptors": {
+                "stateFIPS": "STATEFP10",
+                "countyFIPS": "COUNTYFP10",
+                "totalPopulation": "TOTPOP"
+            },
+            "elections": {
+                "parties": [
+                    {
+                        "partyDescriptorFEC": "DEM",
+                        "partyLegalName": "Democratic Party",
+                        "years": {
+                            "2018": {
+                                "USHouseAbsentee": "USH18D",
+                                "USHouseNoAbsentee": "USH18D",
+                                "USSenateAbsentee": "SEN18D",
+                                "USSenateNoAbsentee": "SEN18D"
+                            },
+                            "2016": {
+                                "USHouseAbsentee": "USH16D",
+                                "USHouseNoAbsentee": "USH16D",
+                                "USSenateAbsentee": "SEN16D",
+                                "USSenateNoAbsentee": "SEN16D",
+                                "USPresidentAbsentee": "PRES16D",
+                                "USPresidentNoAbsentee": "PRES16D"
+                            },
+                            "2014": {
+                                "USHouseAbsentee": "USH14D",
+                                "USHouseNoAbsentee": "USH14D",
+                                "USSenateAbsentee": "SEN14D",
+                                "USSenateNoAbsentee": "SEN14D"
+                            },
+                            "2012": {
+                                "USHouseAbsentee": "USH12D",
+                                "USHouseNoAbsentee": "USH12D",
+                                "USSenateAbsentee": "SEN12D",
+                                "USSenateNoAbsentee": "SEN12D",
+                                "USPresidentAbsentee": "PRES12D",
+                                "USPresidentNoAbsentee": "PRES12D"
+                            }
+                        }
+                    },
+                    {
+                        "partyDescriptorFEC": "REP",
+                        "partyLegalName": "Republican Party",
+                        "years": {
+                            "2018": {
+                                "USHouseAbsentee": "USH18R",
+                                "USHouseNoAbsentee": "USH18R",
+                                "USSenateAbsentee": "SEN18R",
+                                "USSenateNoAbsentee": "SEN18R"
+                            },
+                            "2016": {
+                                "USHouseAbsentee": "USH16R",
+                                "USHouseNoAbsentee": "USH16R",
+                                "USSenateAbsentee": "SEN16R",
+                                "USSenateNoAbsentee": "SEN16R",
+                                "USPresidentAbsentee": "PRES16R",
+                                "USPresidentNoAbsentee": "PRES16R"
+                            },
+                            "2014": {
+                                "USHouseAbsentee": "USH14R",
+                                "USHouseNoAbsentee": "USH14R",
+                                "USSenateAbsentee": "SEN14R",
+                                "USSenateNoAbsentee": "SEN14R"
+                            },
+                            "2012": {
+                                "USHouseAbsentee": "USH12R",
+                                "USHouseNoAbsentee": "USH12R",
+                                "USSenateAbsentee": "SEN12R",
+                                "USSenateNoAbsentee": "SEN12R",
+                                "USPresidentAbsentee": "PRES12R",
+                                "USPresidentNoAbsentee": "PRES12R"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "required": [
+        "metadata",
+        "descriptors",
+        "elections"
+    ],
+    "properties": {
+        "metadata": {
+            "$id": "#/properties/metadata",
+            "type": "object",
+            "title": "The metadata schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "stateLegalName": "Commonwealth of Massachusetts",
+                    "stateFIPSCode": 25,
+                    "git": "https://github.com/mggg-states/MA-shapefiles.git",
+                    "repoName": "MA-shapefiles",
+                    "archive": "MA_precincts_12_16.zip",
+                    "file": "MA_precincts12_16.shp",
+                    "yearEffectiveStart": 2012,
+                    "yearEffectiveEnd": 2018
+                }
+            ],
+            "required": [
+                "stateLegalName",
+                "stateFIPSCode",
+                "git",
+                "repoName",
+                "archive",
+                "file",
+                "yearEffectiveStart",
+                "yearEffectiveEnd"
+            ],
+            "properties": {
+                "stateLegalName": {
+                    "$id": "#/properties/metadata/properties/stateLegalName",
+                    "type": "string",
+                    "title": "The stateLegalName schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "Commonwealth of Massachusetts"
+                    ]
+                },
+                "stateFIPSCode": {
+                    "$id": "#/properties/metadata/properties/stateFIPSCode",
+                    "type": "integer",
+                    "title": "The stateFIPSCode schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        25
+                    ]
+                },
+                "git": {
+                    "$id": "#/properties/metadata/properties/git",
+                    "type": "string",
+                    "title": "The git schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "https://github.com/mggg-states/MA-shapefiles.git"
+                    ]
+                },
+                "repoName": {
+                    "$id": "#/properties/metadata/properties/repoName",
+                    "type": "string",
+                    "title": "The repoName schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "MA-shapefiles"
+                    ]
+                },
+                "archive": {
+                    "$id": "#/properties/metadata/properties/archive",
+                    "type": "string",
+                    "title": "The archive schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "MA_precincts_12_16.zip"
+                    ]
+                },
+                "file": {
+                    "$id": "#/properties/metadata/properties/file",
+                    "type": "string",
+                    "title": "The file schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "MA_precincts12_16.shp"
+                    ]
+                },
+                "yearEffectiveStart": {
+                    "$id": "#/properties/metadata/properties/yearEffectiveStart",
+                    "type": "integer",
+                    "title": "The yearEffectiveStart schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        2012
+                    ]
+                },
+                "yearEffectiveEnd": {
+                    "$id": "#/properties/metadata/properties/yearEffectiveEnd",
+                    "type": "integer",
+                    "title": "The yearEffectiveEnd schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        2018
+                    ]
+                }
+            },
+            "additionalProperties": true
+        },
+        "descriptors": {
+            "$id": "#/properties/descriptors",
+            "type": "object",
+            "title": "The descriptors schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "stateFIPS": "STATEFP10",
+                    "countyFIPS": "COUNTYFP10",
+                    "totalPopulation": "TOTPOP"
+                }
+            ],
+            "required": [
+                "stateFIPS",
+                "countyFIPS",
+                "totalPopulation"
+            ],
+            "properties": {
+                "stateFIPS": {
+                    "$id": "#/properties/descriptors/properties/stateFIPS",
+                    "type": "string",
+                    "title": "The stateFIPS schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "STATEFP10"
+                    ]
+                },
+                "countyFIPS": {
+                    "$id": "#/properties/descriptors/properties/countyFIPS",
+                    "type": "string",
+                    "title": "The countyFIPS schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "COUNTYFP10"
+                    ]
+                },
+                "totalPopulation": {
+                    "$id": "#/properties/descriptors/properties/totalPopulation",
+                    "type": "string",
+                    "title": "The totalPopulation schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "TOTPOP"
+                    ]
+                }
+            },
+            "additionalProperties": true
+        },
+        "elections": {
+            "$id": "#/properties/elections",
+            "type": "object",
+            "title": "The elections schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "parties": [
+                        {
+                            "partyDescriptorFEC": "DEM",
+                            "partyLegalName": "Democratic Party",
+                            "years": {
+                                "2018": {
+                                    "USHouseAbsentee": "USH18D",
+                                    "USHouseNoAbsentee": "USH18D",
+                                    "USSenateAbsentee": "SEN18D",
+                                    "USSenateNoAbsentee": "SEN18D"
+                                },
+                                "2016": {
+                                    "USHouseAbsentee": "USH16D",
+                                    "USHouseNoAbsentee": "USH16D",
+                                    "USSenateAbsentee": "SEN16D",
+                                    "USSenateNoAbsentee": "SEN16D",
+                                    "USPresidentAbsentee": "PRES16D",
+                                    "USPresidentNoAbsentee": "PRES16D"
+                                },
+                                "2014": {
+                                    "USHouseAbsentee": "USH14D",
+                                    "USHouseNoAbsentee": "USH14D",
+                                    "USSenateAbsentee": "SEN14D",
+                                    "USSenateNoAbsentee": "SEN14D"
+                                },
+                                "2012": {
+                                    "USHouseAbsentee": "USH12D",
+                                    "USHouseNoAbsentee": "USH12D",
+                                    "USSenateAbsentee": "SEN12D",
+                                    "USSenateNoAbsentee": "SEN12D",
+                                    "USPresidentAbsentee": "PRES12D",
+                                    "USPresidentNoAbsentee": "PRES12D"
+                                }
+                            }
+                        },
+                        {
+                            "partyDescriptorFEC": "REP",
+                            "partyLegalName": "Republican Party",
+                            "years": {
+                                "2018": {
+                                    "USHouseAbsentee": "USH18R",
+                                    "USHouseNoAbsentee": "USH18R",
+                                    "USSenateAbsentee": "SEN18R",
+                                    "USSenateNoAbsentee": "SEN18R"
+                                },
+                                "2016": {
+                                    "USHouseAbsentee": "USH16R",
+                                    "USHouseNoAbsentee": "USH16R",
+                                    "USSenateAbsentee": "SEN16R",
+                                    "USSenateNoAbsentee": "SEN16R",
+                                    "USPresidentAbsentee": "PRES16R",
+                                    "USPresidentNoAbsentee": "PRES16R"
+                                },
+                                "2014": {
+                                    "USHouseAbsentee": "USH14R",
+                                    "USHouseNoAbsentee": "USH14R",
+                                    "USSenateAbsentee": "SEN14R",
+                                    "USSenateNoAbsentee": "SEN14R"
+                                },
+                                "2012": {
+                                    "USHouseAbsentee": "USH12R",
+                                    "USHouseNoAbsentee": "USH12R",
+                                    "USSenateAbsentee": "SEN12R",
+                                    "USSenateNoAbsentee": "SEN12R",
+                                    "USPresidentAbsentee": "PRES12R",
+                                    "USPresidentNoAbsentee": "PRES12R"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "required": [
+                "parties"
+            ],
+            "properties": {
+                "parties": {
+                    "$id": "#/properties/elections/properties/parties",
+                    "type": "array",
+                    "title": "The parties schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        [
+                            {
+                                "partyDescriptorFEC": "DEM",
+                                "partyLegalName": "Democratic Party",
+                                "years": {
+                                    "2018": {
+                                        "USHouseAbsentee": "USH18D",
+                                        "USHouseNoAbsentee": "USH18D",
+                                        "USSenateAbsentee": "SEN18D",
+                                        "USSenateNoAbsentee": "SEN18D"
+                                    },
+                                    "2016": {
+                                        "USHouseAbsentee": "USH16D",
+                                        "USHouseNoAbsentee": "USH16D",
+                                        "USSenateAbsentee": "SEN16D",
+                                        "USSenateNoAbsentee": "SEN16D",
+                                        "USPresidentAbsentee": "PRES16D",
+                                        "USPresidentNoAbsentee": "PRES16D"
+                                    },
+                                    "2014": {
+                                        "USHouseAbsentee": "USH14D",
+                                        "USHouseNoAbsentee": "USH14D",
+                                        "USSenateAbsentee": "SEN14D",
+                                        "USSenateNoAbsentee": "SEN14D"
+                                    },
+                                    "2012": {
+                                        "USHouseAbsentee": "USH12D",
+                                        "USHouseNoAbsentee": "USH12D",
+                                        "USSenateAbsentee": "SEN12D",
+                                        "USSenateNoAbsentee": "SEN12D",
+                                        "USPresidentAbsentee": "PRES12D",
+                                        "USPresidentNoAbsentee": "PRES12D"
+                                    }
+                                }
+                            },
+                            {
+                                "partyDescriptorFEC": "REP",
+                                "partyLegalName": "Republican Party",
+                                "years": {
+                                    "2018": {
+                                        "USHouseAbsentee": "USH18R",
+                                        "USHouseNoAbsentee": "USH18R",
+                                        "USSenateAbsentee": "SEN18R",
+                                        "USSenateNoAbsentee": "SEN18R"
+                                    },
+                                    "2016": {
+                                        "USHouseAbsentee": "USH16R",
+                                        "USHouseNoAbsentee": "USH16R",
+                                        "USSenateAbsentee": "SEN16R",
+                                        "USSenateNoAbsentee": "SEN16R",
+                                        "USPresidentAbsentee": "PRES16R",
+                                        "USPresidentNoAbsentee": "PRES16R"
+                                    },
+                                    "2014": {
+                                        "USHouseAbsentee": "USH14R",
+                                        "USHouseNoAbsentee": "USH14R",
+                                        "USSenateAbsentee": "SEN14R",
+                                        "USSenateNoAbsentee": "SEN14R"
+                                    },
+                                    "2012": {
+                                        "USHouseAbsentee": "USH12R",
+                                        "USHouseNoAbsentee": "USH12R",
+                                        "USSenateAbsentee": "SEN12R",
+                                        "USSenateNoAbsentee": "SEN12R",
+                                        "USPresidentAbsentee": "PRES12R",
+                                        "USPresidentNoAbsentee": "PRES12R"
+                                    }
+                                }
+                            }
+                        ]
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/elections/properties/parties/items",
+                        "anyOf": [
+                            {
+                                "$id": "#/properties/elections/properties/parties/items/anyOf/0",
+                                "type": "object",
+                                "title": "The first anyOf schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": {},
+                                "examples": [
+                                    {
+                                        "partyDescriptorFEC": "DEM",
+                                        "partyLegalName": "Democratic Party",
+                                        "years": {
+                                            "2018": {
+                                                "USHouseAbsentee": "USH18D",
+                                                "USHouseNoAbsentee": "USH18D",
+                                                "USSenateAbsentee": "SEN18D",
+                                                "USSenateNoAbsentee": "SEN18D"
+                                            },
+                                            "2016": {
+                                                "USHouseAbsentee": "USH16D",
+                                                "USHouseNoAbsentee": "USH16D",
+                                                "USSenateAbsentee": "SEN16D",
+                                                "USSenateNoAbsentee": "SEN16D",
+                                                "USPresidentAbsentee": "PRES16D",
+                                                "USPresidentNoAbsentee": "PRES16D"
+                                            },
+                                            "2014": {
+                                                "USHouseAbsentee": "USH14D",
+                                                "USHouseNoAbsentee": "USH14D",
+                                                "USSenateAbsentee": "SEN14D",
+                                                "USSenateNoAbsentee": "SEN14D"
+                                            },
+                                            "2012": {
+                                                "USHouseAbsentee": "USH12D",
+                                                "USHouseNoAbsentee": "USH12D",
+                                                "USSenateAbsentee": "SEN12D",
+                                                "USSenateNoAbsentee": "SEN12D",
+                                                "USPresidentAbsentee": "PRES12D",
+                                                "USPresidentNoAbsentee": "PRES12D"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "required": [
+                                    "partyDescriptorFEC",
+                                    "partyLegalName",
+                                    "years"
+                                ],
+                                "properties": {
+                                    "partyDescriptorFEC": {
+                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/partyDescriptorFEC",
+                                        "type": "string",
+                                        "title": "The partyDescriptorFEC schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "DEM"
+                                        ]
+                                    },
+                                    "partyLegalName": {
+                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/partyLegalName",
+                                        "type": "string",
+                                        "title": "The partyLegalName schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "Democratic Party"
+                                        ]
+                                    },
+                                    "years": {
+                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years",
+                                        "type": "object",
+                                        "title": "The years schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": {},
+                                        "examples": [
+                                            {
+                                                "2018": {
+                                                    "USHouseAbsentee": "USH18D",
+                                                    "USHouseNoAbsentee": "USH18D",
+                                                    "USSenateAbsentee": "SEN18D",
+                                                    "USSenateNoAbsentee": "SEN18D"
+                                                },
+                                                "2016": {
+                                                    "USHouseAbsentee": "USH16D",
+                                                    "USHouseNoAbsentee": "USH16D",
+                                                    "USSenateAbsentee": "SEN16D",
+                                                    "USSenateNoAbsentee": "SEN16D",
+                                                    "USPresidentAbsentee": "PRES16D",
+                                                    "USPresidentNoAbsentee": "PRES16D"
+                                                },
+                                                "2014": {
+                                                    "USHouseAbsentee": "USH14D",
+                                                    "USHouseNoAbsentee": "USH14D",
+                                                    "USSenateAbsentee": "SEN14D",
+                                                    "USSenateNoAbsentee": "SEN14D"
+                                                },
+                                                "2012": {
+                                                    "USHouseAbsentee": "USH12D",
+                                                    "USHouseNoAbsentee": "USH12D",
+                                                    "USSenateAbsentee": "SEN12D",
+                                                    "USSenateNoAbsentee": "SEN12D",
+                                                    "USPresidentAbsentee": "PRES12D",
+                                                    "USPresidentNoAbsentee": "PRES12D"
+                                                }
+                                            }
+                                        ],
+                                        "required": [
+                                            "2018",
+                                            "2016",
+                                            "2014",
+                                            "2012"
+                                        ],
+                                        "properties": {
+                                            "2018": {
+                                                "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2018",
+                                                "type": "object",
+                                                "title": "The 2018 schema",
+                                                "description": "An explanation about the purpose of this instance.",
+                                                "default": {},
+                                                "examples": [
+                                                    {
+                                                        "USHouseAbsentee": "USH18D",
+                                                        "USHouseNoAbsentee": "USH18D",
+                                                        "USSenateAbsentee": "SEN18D",
+                                                        "USSenateNoAbsentee": "SEN18D"
+                                                    }
+                                                ],
+                                                "required": [
+                                                    "USHouseAbsentee",
+                                                    "USHouseNoAbsentee",
+                                                    "USSenateAbsentee",
+                                                    "USSenateNoAbsentee"
+                                                ],
+                                                "properties": {
+                                                    "USHouseAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2018/properties/USHouseAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USHouseAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "USH18D"
+                                                        ]
+                                                    },
+                                                    "USHouseNoAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2018/properties/USHouseNoAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USHouseNoAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "USH18D"
+                                                        ]
+                                                    },
+                                                    "USSenateAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2018/properties/USSenateAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USSenateAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "SEN18D"
+                                                        ]
+                                                    },
+                                                    "USSenateNoAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2018/properties/USSenateNoAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USSenateNoAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "SEN18D"
+                                                        ]
+                                                    }
+                                                },
+                                                "additionalProperties": true
+                                            },
+                                            "2016": {
+                                                "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2016",
+                                                "type": "object",
+                                                "title": "The 2016 schema",
+                                                "description": "An explanation about the purpose of this instance.",
+                                                "default": {},
+                                                "examples": [
+                                                    {
+                                                        "USHouseAbsentee": "USH16D",
+                                                        "USHouseNoAbsentee": "USH16D",
+                                                        "USSenateAbsentee": "SEN16D",
+                                                        "USSenateNoAbsentee": "SEN16D",
+                                                        "USPresidentAbsentee": "PRES16D",
+                                                        "USPresidentNoAbsentee": "PRES16D"
+                                                    }
+                                                ],
+                                                "required": [
+                                                    "USHouseAbsentee",
+                                                    "USHouseNoAbsentee",
+                                                    "USSenateAbsentee",
+                                                    "USSenateNoAbsentee",
+                                                    "USPresidentAbsentee",
+                                                    "USPresidentNoAbsentee"
+                                                ],
+                                                "properties": {
+                                                    "USHouseAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2016/properties/USHouseAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USHouseAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "USH16D"
+                                                        ]
+                                                    },
+                                                    "USHouseNoAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2016/properties/USHouseNoAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USHouseNoAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "USH16D"
+                                                        ]
+                                                    },
+                                                    "USSenateAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2016/properties/USSenateAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USSenateAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "SEN16D"
+                                                        ]
+                                                    },
+                                                    "USSenateNoAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2016/properties/USSenateNoAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USSenateNoAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "SEN16D"
+                                                        ]
+                                                    },
+                                                    "USPresidentAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2016/properties/USPresidentAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USPresidentAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "PRES16D"
+                                                        ]
+                                                    },
+                                                    "USPresidentNoAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2016/properties/USPresidentNoAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USPresidentNoAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "PRES16D"
+                                                        ]
+                                                    }
+                                                },
+                                                "additionalProperties": true
+                                            },
+                                            "2014": {
+                                                "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2014",
+                                                "type": "object",
+                                                "title": "The 2014 schema",
+                                                "description": "An explanation about the purpose of this instance.",
+                                                "default": {},
+                                                "examples": [
+                                                    {
+                                                        "USHouseAbsentee": "USH14D",
+                                                        "USHouseNoAbsentee": "USH14D",
+                                                        "USSenateAbsentee": "SEN14D",
+                                                        "USSenateNoAbsentee": "SEN14D"
+                                                    }
+                                                ],
+                                                "required": [
+                                                    "USHouseAbsentee",
+                                                    "USHouseNoAbsentee",
+                                                    "USSenateAbsentee",
+                                                    "USSenateNoAbsentee"
+                                                ],
+                                                "properties": {
+                                                    "USHouseAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2014/properties/USHouseAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USHouseAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "USH14D"
+                                                        ]
+                                                    },
+                                                    "USHouseNoAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2014/properties/USHouseNoAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USHouseNoAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "USH14D"
+                                                        ]
+                                                    },
+                                                    "USSenateAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2014/properties/USSenateAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USSenateAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "SEN14D"
+                                                        ]
+                                                    },
+                                                    "USSenateNoAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2014/properties/USSenateNoAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USSenateNoAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "SEN14D"
+                                                        ]
+                                                    }
+                                                },
+                                                "additionalProperties": true
+                                            },
+                                            "2012": {
+                                                "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2012",
+                                                "type": "object",
+                                                "title": "The 2012 schema",
+                                                "description": "An explanation about the purpose of this instance.",
+                                                "default": {},
+                                                "examples": [
+                                                    {
+                                                        "USHouseAbsentee": "USH12D",
+                                                        "USHouseNoAbsentee": "USH12D",
+                                                        "USSenateAbsentee": "SEN12D",
+                                                        "USSenateNoAbsentee": "SEN12D",
+                                                        "USPresidentAbsentee": "PRES12D",
+                                                        "USPresidentNoAbsentee": "PRES12D"
+                                                    }
+                                                ],
+                                                "required": [
+                                                    "USHouseAbsentee",
+                                                    "USHouseNoAbsentee",
+                                                    "USSenateAbsentee",
+                                                    "USSenateNoAbsentee",
+                                                    "USPresidentAbsentee",
+                                                    "USPresidentNoAbsentee"
+                                                ],
+                                                "properties": {
+                                                    "USHouseAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2012/properties/USHouseAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USHouseAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "USH12D"
+                                                        ]
+                                                    },
+                                                    "USHouseNoAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2012/properties/USHouseNoAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USHouseNoAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "USH12D"
+                                                        ]
+                                                    },
+                                                    "USSenateAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2012/properties/USSenateAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USSenateAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "SEN12D"
+                                                        ]
+                                                    },
+                                                    "USSenateNoAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2012/properties/USSenateNoAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USSenateNoAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "SEN12D"
+                                                        ]
+                                                    },
+                                                    "USPresidentAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2012/properties/USPresidentAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USPresidentAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "PRES12D"
+                                                        ]
+                                                    },
+                                                    "USPresidentNoAbsentee": {
+                                                        "$id": "#/properties/elections/properties/parties/items/anyOf/0/properties/years/properties/2012/properties/USPresidentNoAbsentee",
+                                                        "type": "string",
+                                                        "title": "The USPresidentNoAbsentee schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "PRES12D"
+                                                        ]
+                                                    }
+                                                },
+                                                "additionalProperties": true
+                                            }
+                                        },
+                                        "additionalProperties": true
+                                    }
+                                },
+                                "additionalProperties": true
+                            }
+                        ]
+                    }
+                }
+            },
+            "additionalProperties": true
+        }
+    },
+    "additionalProperties": true
+}

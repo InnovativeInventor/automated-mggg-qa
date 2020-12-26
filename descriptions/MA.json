@@ -1,0 +1,88 @@
+{
+    "metadata": {
+        "stateLegalName": "Commonwealth of Massachusetts",
+        "stateFIPSCode": 25,
+        "git": "https://github.com/mggg-states/MA-shapefiles.git",
+        "repoName": "MA-shapefiles",
+        "archive": "MA_precincts_12_16.zip",
+        "file": "MA_precincts12_16.shp",
+        "yearEffectiveStart": 2012,
+        "yearEffectiveEnd": 2018
+    },
+    "descriptors": {
+        "stateFIPS": "STATEFP10",
+        "countyFIPS": "COUNTYFP10",
+        "totalPopulation": "TOTPOP"
+    },
+    "elections": {
+        "parties": [{
+                "partyDescriptorFEC": "DEM",
+                "partyLegalName": "Democratic Party",
+                "years": {
+                    "2018": {
+                        "USHouseAbsentee": "USH18D",
+                        "USHouseNoAbsentee": "USH18D",
+                        "USSenateAbsentee": "SEN18D",
+                        "USSenateNoAbsentee": "SEN18D"
+                    },
+                    "2016": {
+                        "USHouseAbsentee": "USH16D",
+                        "USHouseNoAbsentee": "USH16D",
+                        "USSenateAbsentee": "SEN16D",
+                        "USSenateNoAbsentee": "SEN16D",
+			"USPresidentAbsentee": "PRES16D",
+			"USPresidentNoAbsentee": "PRES16D"
+                    },
+                    "2014": {
+                        "USHouseAbsentee": "USH14D",
+                        "USHouseNoAbsentee": "USH14D",
+                        "USSenateAbsentee": "SEN14D",
+                        "USSenateNoAbsentee": "SEN14D"
+                    },
+                    "2012": {
+                        "USHouseAbsentee": "USH12D",
+                        "USHouseNoAbsentee": "USH12D",
+                        "USSenateAbsentee": "SEN12D",
+                        "USSenateNoAbsentee": "SEN12D", 
+			"USPresidentAbsentee": "PRES12D",
+			"USPresidentNoAbsentee": "PRES12D"
+                    }
+                }
+            },
+            {
+                "partyDescriptorFEC": "REP",
+                "partyLegalName": "Republican Party",
+                "years": {
+                    "2018": {
+                        "USHouseAbsentee": "USH18R",
+                        "USHouseNoAbsentee": "USH18R",
+                        "USSenateAbsentee": "SEN18R",
+                        "USSenateNoAbsentee": "SEN18R"
+                    },
+                    "2016": {
+                        "USHouseAbsentee": "USH16R",
+                        "USHouseNoAbsentee": "USH16R",
+                        "USSenateAbsentee": "SEN16R",
+                        "USSenateNoAbsentee": "SEN16R",
+			"USPresidentAbsentee": "PRES16R", 
+			"USPresidentNoAbsentee": "PRES16R"
+                    },
+                    "2014": {
+                        "USHouseAbsentee": "USH14R",
+                        "USHouseNoAbsentee": "USH14R",
+                        "USSenateAbsentee": "SEN14R",
+                        "USSenateNoAbsentee": "SEN14R"
+                    },
+                    "2012": {
+                        "USHouseAbsentee": "USH12R",
+                        "USHouseNoAbsentee": "USH12R",
+                        "USSenateAbsentee": "SEN12R",
+                        "USSenateNoAbsentee": "SEN12R",
+			"USPresidentAbsentee": "PRES12R",
+			"USPresidentNoAbsentee": "PRES12R"
+                    }
+                }
+            }
+        ]
+    }
+}
