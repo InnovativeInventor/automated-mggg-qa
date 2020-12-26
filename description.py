@@ -54,7 +54,7 @@ class Descriptor(BaseModel):
     totalPopulation: Optional[str]
 
 
-class StateDatafile(BaseModel):
+class StateSchema(BaseModel):
     metadata: Metadata
     descriptors: Descriptor
     elections: ElectionPartiesDescriptor
