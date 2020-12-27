@@ -26,6 +26,8 @@ class Auditor:
     # def __init__(self, census_api_key: str):
         # self.census_api = Census(census_api_key)
 
+        self.errors = 0
+
         self.openelections_dir: str = tempfile.TemporaryDirectory(
             suffix="openelections"
         ).name
@@ -127,10 +129,10 @@ class Auditor:
 
 
                 total_population_check = checks.TotalPopulationCheck(schema, shapefile)
-                total_population_check.audit()
+                self.errors += total_population_check.audit()
 
                 county_population_check = checks.CountyTotalPopulationCheck(schema, shapefile)
-                county_population_check.audit()
+                self.errors += county_population_check.audit()
 
             except KeyboardInterrupt:
                 Logger.log_info(
@@ -151,3 +153,8 @@ if __name__ == "__main__":
 
     audit = Auditor()
     audit.run_audit()
+    if audit.errors == 0:
+        Logger.log_info("Audit done. All checks passed!")
+    else:
+        Logger.log_error(f"Audit done. {audit.errors} checks failed!")
+        exit(1)

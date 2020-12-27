@@ -7,6 +7,7 @@ from utils.logger import Logger
 
 class BaseCheck():
     def __init__(self, schema: StateSchema, shapefile: gdutils.extract.ExtractTable):
+        self.errors = 0
         self.schema = schema
         self.shapefile = shapefile
         self.shapefile_gdf = shapefile.extract()
@@ -33,9 +34,13 @@ class TotalPopulationCheck(BaseCheck):
         try:
             assert abs(mggg_total_population - census_total_population) <= 1
         except AssertionError as e:
+            self.errors += 1
             Logger.log_error(
                 f"The total population counts are off by more than 1 (off by {abs(census_total_population-mggg_total_population)})!"
             )
+
+
+        return self.errors
 
 class CountyTotalPopulationCheck(BaseCheck):
     def audit(self):
@@ -63,8 +68,9 @@ class CountyTotalPopulationCheck(BaseCheck):
                 try:
                     assert each_county[self.descriptors.totalPopulation] != 0
                 except AssertionError as e:
+                    self.errors += 1
                     Logger.log_error(
-                        f"The total population in {each_county[self.descriptors.countyLegalName]} county (FIPS {each_county_fips}) is zero!"
+                        f"The total population in {each_county[self.descriptors.countyLegalName]}, {self.metadata.stateAbbreviation} is zero!"
                     )
 
                 county_fips = str(each_county_fips).zfill(3)
@@ -77,6 +83,9 @@ class CountyTotalPopulationCheck(BaseCheck):
                         <= 1
                     )
                 except AssertionError as e:
+                    self.errors += 1
                     Logger.log_error(
-                        f"The mggg-states total population in {each_county[self.descriptors.countyLegalName]} county (FIPS {each_county_fips}) are not close to the US Census ({each_county[self.descriptors.totalPopulation]}!={census_county_populations[county_fips]})!"
+                        f"The mggg-states total population in {each_county[self.descriptors.countyLegalName]}, {self.metadata.stateAbbreviation} differ from the US Census ({each_county[self.descriptors.totalPopulation]}!={census_county_populations[county_fips]})!"
                     )
+
+        return self.errors

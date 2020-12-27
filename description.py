@@ -8,20 +8,6 @@ class StateRepo(BaseModel):
     repo_account: str
     repo_url: str
 
-
-class Metadata(BaseModel):
-    stateLegalName: str
-    stateFIPSCode: int
-
-    git: str
-    repoName: str
-    archive: str
-    fileName: str
-
-    yearEffectiveStart: int
-    yearEffectiveEnd: int
-
-
 # JSON schema parsing
 # TODO: Add comments, etc to make this easier to understand
 class ElectionYearResult(BaseModel):
@@ -53,6 +39,18 @@ class Descriptor(BaseModel):
 
     totalPopulation: Optional[str]
 
+class Metadata(BaseModel):
+    stateLegalName: str
+    stateFIPSCode: int
+    stateAbbreviation: str
+
+    git: str
+    repoName: str
+    archive: str
+    fileName: str
+
+    yearEffectiveStart: int
+    yearEffectiveEnd: int
 
 class StateSchema(BaseModel):
     metadata: Metadata
