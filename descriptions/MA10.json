@@ -1,0 +1,78 @@
+{
+    "metadata": {
+        "stateLegalName": "Commonwealth of Massachusetts",
+        "stateFIPSCode": 25,
+	"stateAbbreviation": "MA",
+        "git": "https://github.com/mggg-states/MA-shapefiles.git",
+        "repoName": "MA-shapefiles",
+        "archive": "MA_precincts_02_10.zip",
+        "fileName": "MA_precincts_02_10.shp",
+        "yearEffectiveStart": 2002,
+        "yearEffectiveEnd": 2010
+    },
+    "descriptors": {
+        "stateFIPS": "STATEFP10",
+        "countyFIPS": "COUNTYFP10",
+	"countyLegalName": "",
+        "totalPopulation": "TOTPOP"
+    },
+    "elections": {
+        "parties": [{
+                "partyDescriptorFEC": "DEM",
+                "partyLegalName": "Democratic Party",
+                "years": {
+                    "2010": {
+                        "USSenateAbsentee": "SEN10D",
+                        "USSenateNoAbsentee": "SEN10D"
+                    },
+                    "2008": {
+                        "USSenateAbsentee": "SEN08D",
+                        "USSenateNoAbsentee": "SEN08D",
+                        "USPresidentAbsentee": "PRES08D",
+                        "USPresidentNoAbsentee": "PRES08D"
+                    },
+                    "2006": {
+                        "USSenateAbsentee": "SEN06D",
+                        "USSenateNoAbsentee": "SEN06D"
+                    },
+                    "2004": {
+                        "USPresidentAbsentee": "PRES04D",
+                        "USPresidentNoAbsentee": "PRES04D"
+                    },
+                    "2002": {
+                        "USSenateAbsentee": "SEN02D",
+                        "USSenateNoAbsentee": "SEN02D"
+                    }
+                }
+            },
+            {
+                "partyDescriptorFEC": "REP",
+                "partyLegalName": "Republican Party",
+                "years": {
+                    "2010": {
+                        "USSenateAbsentee": "SEN10R",
+                        "USSenateNoAbsentee": "SEN10R"
+                    },
+                    "2008": {
+                        "USSenateAbsentee": "SEN08R",
+                        "USSenateNoAbsentee": "SEN08R",
+                        "USPresidentAbsentee": "PRES08R",
+                        "USPresidentNoAbsentee": "PRES08R"
+                    },
+                    "2006": {
+                        "USSenateAbsentee": "SEN06R",
+                        "USSenateNoAbsentee": "SEN06R"
+                    },
+                    "2004": {
+                        "USPresidentAbsentee": "PRES04R",
+                        "USPresidentNoAbsentee": "PRES04R"
+                    },
+                    "2002": {
+                        "USSenateAbsentee": "SEN02R",
+                        "USSenateNoAbsentee": "SEN02R"
+                    }
+                }
+            }
+        ]
+    }
+}

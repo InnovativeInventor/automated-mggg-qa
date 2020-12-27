@@ -39,14 +39,13 @@ class TotalPopulationCheck(BaseCheck):
                 f"The total population counts are off by more than 1 (off by {abs(census_total_population-mggg_total_population)})!"
             )
 
-
         return self.errors
 
 class CountyTotalPopulationCheck(BaseCheck):
     def audit(self):
         if self.descriptors.countyFIPS:
             Logger.log_info(
-                f"Checking the mggg-states county-level population count in {self.metadata.repoName} for {self.metadata.yearEffectiveEnd} "
+                f"Checking the mggg-states county-level population count in {self.metadata.repoName} for {self.metadata.yearEffectiveEnd}"
             )
 
             # Aggregate by county
@@ -55,7 +54,7 @@ class CountyTotalPopulationCheck(BaseCheck):
                 county = dict(each_county)
                 if each_county_fips in county_aggregate:
                     county_aggregate[each_county_fips] = {
-                        k: (v + county[k] if isinstance(v, float) else v)
+                        k: (v + county[k] if isinstance(v, float) else v if v else county[k])
                         for k, v in county_aggregate[each_county_fips].items()
                     }
                 else:
@@ -65,12 +64,17 @@ class CountyTotalPopulationCheck(BaseCheck):
                 counties=[str(x).zfill(3) for x in county_aggregate.keys()]
             )
             for each_county_fips, each_county in county_aggregate.items():
+                if self.descriptors.countyLegalName in each_county: # for logging
+                    county_legal_name = each_county[self.descriptors.countyLegalName]
+                else:
+                    county_legal_name = "Unspecified"
+
                 try:
                     assert each_county[self.descriptors.totalPopulation] != 0
                 except AssertionError as e:
                     self.errors += 1
                     Logger.log_error(
-                        f"The total population in {each_county[self.descriptors.countyLegalName]}, {self.metadata.stateAbbreviation} is zero!"
+                        f"The total population in {county_legal_name}, {self.metadata.stateAbbreviation} (FIPS={county_fips}) is zero!"
                     )
 
                 county_fips = str(each_county_fips).zfill(3)
@@ -85,7 +89,23 @@ class CountyTotalPopulationCheck(BaseCheck):
                 except AssertionError as e:
                     self.errors += 1
                     Logger.log_error(
-                        f"The mggg-states total population in {each_county[self.descriptors.countyLegalName]}, {self.metadata.stateAbbreviation} differ from the US Census ({each_county[self.descriptors.totalPopulation]}!={census_county_populations[county_fips]})!"
+                        f"The total population in {county_legal_name}, {self.metadata.stateAbbreviation} (FIPS={county_fips}) differ from the US Census ({each_county[self.descriptors.totalPopulation]}!={census_county_populations[county_fips]})!"
                     )
 
         return self.errors
+
+class DataExistenceCheck(BaseCheck):
+    def audit(self):
+        expected_values = []
+        if self.descriptors.countyFIPS:
+            expected_values.append(self.descriptors.countyFIPS)
+
+        for value in expected_values:
+            try:
+                assert all(self.shapefile.list_values(column=value))
+
+            except AssertionError as e:
+                self.errors += 1
+                Logger.log_warning(
+                    f"Not all values in {value} column in {self.metadata.repoName} for {self.metadata.yearEffectiveEnd} are filled!"
+                )

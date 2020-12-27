@@ -11,11 +11,11 @@ class StateRepo(BaseModel):
 # JSON schema parsing
 # TODO: Add comments, etc to make this easier to understand
 class ElectionYearResult(BaseModel):
-    USHouseAbsentee: str
-    USHouseNoAbsentee: str
+    USHouseAbsentee: Optional[str]
+    USHouseNoAbsentee: Optional[str]
 
-    USSenateAbsentee: str
-    USSenateNoAbsentee: str
+    USSenateAbsentee: Optional[str]
+    USSenateNoAbsentee: Optional[str]
 
     USPresidentAbsentee: Optional[str]
     USPresidentNoAbsentee: Optional[str]

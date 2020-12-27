@@ -117,7 +117,6 @@ class Auditor:
                 # Find column names
                 total_population_col = descriptors.totalPopulation
                 county_fips_col = descriptors.countyFIPS
-                county_legal_name = descriptors.countyLegalName
 
                 # Import and read shapefiles
                 if county_fips_col:
@@ -128,11 +127,12 @@ class Auditor:
                     shapefile = gdutils.extract.read_file(file_path)
 
 
-                total_population_check = checks.TotalPopulationCheck(schema, shapefile)
-                self.errors += total_population_check.audit()
+                # Hard checks
+                self.errors += checks.TotalPopulationCheck(schema, shapefile).audit()
+                self.errors += checks.CountyTotalPopulationCheck(schema, shapefile).audit()
 
-                county_population_check = checks.CountyTotalPopulationCheck(schema, shapefile)
-                self.errors += county_population_check.audit()
+                # Soft checks
+                checks.DataExistenceCheck(schema, shapefile).audit()
 
             except KeyboardInterrupt:
                 Logger.log_info(
