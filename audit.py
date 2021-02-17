@@ -34,6 +34,9 @@ class Auditor:
         self.mggg_states_dir: str = tempfile.TemporaryDirectory(
             suffix="mggg-states"
         ).name
+        self.scratch_dir: str = tempfile.TemporaryDirectory(
+            suffix="mggg-states"
+        ).name
 
         # Generate and filter list of openelections repos
         state_expr = re.compile(r"^openelections-data-\S\S$")
@@ -119,20 +122,22 @@ class Auditor:
                 county_fips_col = descriptors.countyFIPS
 
                 # Import and read shapefiles
-                if county_fips_col:
-                    shapefile = gdutils.extract.read_file(
-                        file_path, column=county_fips_col
-                    )
-                else:
-                    shapefile = gdutils.extract.read_file(file_path)
+                # DEPRECATED to make stuff more abstractable
+                # if county_fips_col:
+                #     shapefile = gdutils.extract.read_file(
+                #         file_path, column=county_fips_col
+                #     )
+                # else:
+                shapefile = gdutils.extract.read_file(file_path)
 
 
                 # Hard checks
-                self.errors += checks.TotalPopulationCheck(schema, shapefile).audit()
-                self.errors += checks.CountyTotalPopulationCheck(schema, shapefile).audit()
+                # TODO: get these to automatically load
+                self.errors += checks.TotalPopulationCheck(schema, shapefile, self.scratch_dir).audit()
+                self.errors += checks.CountyTotalPopulationCheck(schema, shapefile, self.scratch_dir).audit()
 
                 # Soft checks
-                checks.DataExistenceCheck(schema, shapefile).audit()
+                checks.DataExistenceCheck(schema, shapefile, self.scratch_dir).audit()
 
             except KeyboardInterrupt:
                 Logger.log_info(

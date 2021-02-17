@@ -16,6 +16,7 @@
 	"countyLegalName": "",
         "totalPopulation": "TOTPOP"
     },
+    "sources": ["CENSUS", "SOS"],
     "elections": {
         "parties": [{
                 "partyDescriptorFEC": "DEM",
