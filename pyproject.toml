@@ -10,6 +10,7 @@ python = "^3.8"
 gdutils = { git = "https://github.com/InnovativeInventor/gdutils.git", branch = "main"}
 pydantic = "^1.7.3"
 python-dotenv = "^0.15.0"
+gerrychain = "^0.2.15"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.1"

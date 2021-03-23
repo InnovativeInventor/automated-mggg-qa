@@ -2,6 +2,7 @@ from description import StateSchema
 import gdutils.extract
 import math
 from typing import Dict
+from gerrychain import Graph
 from census import CensusWrapper
 from utils.logger import Logger
 import requests
@@ -144,6 +145,23 @@ class DataExistenceCheck(BaseCheck):
                 f"Not all values in {value} column in {self.metadata.repoName} for {self.metadata.yearEffectiveEnd} are filled!"
             )
 
+        return self.errors
+
+class FromGraphGerrychainCheck(BaseCheck):
+    """
+    Checks if a shapefile is loadable in gerrychain
+    """
+    def audit(self):
+        try:
+            graph = Graph.from_geodataframe(self.shapefile_gdf)
+            assert graph # TODO: add other checks
+        except AssertionError as e:
+            self.errors += 1
+            Logger.log_warning(
+                f"The shapefile in {self.metadata.repoName} for {self.metadata.yearEffectiveEnd} may not be loadable in GerryChain!"
+            )
+
+        return self.errors
 
 class MEDSL2016Check(BaseCheck):
     def audit(self):

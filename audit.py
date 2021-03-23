@@ -135,6 +135,7 @@ class Auditor:
                 # TODO: get these to automatically load
                 self.errors += checks.TotalPopulationCheck(schema, shapefile, self.scratch_dir).audit()
                 self.errors += checks.CountyTotalPopulationCheck(schema, shapefile, self.scratch_dir).audit()
+                self.errors += checks.FromGraphGerrychainCheck(schema, shapefile, self.scratch_dir).audit()
 
                 # Soft checks
                 checks.DataExistenceCheck(schema, shapefile, self.scratch_dir).audit()
